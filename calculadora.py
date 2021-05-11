@@ -1,6 +1,9 @@
 def main():
+    #Se debe hacer el pip de appium en el cmd
+    #pip install Appium-Python-Client
     from appium import webdriver
 
+    #Esta información debe ser diferente para cada dispositivo. En el archivo .txt del repositorio están las instrucciones
     caps = {}
     caps["platformName"] = "Android"
     caps["platformVersion"] = "10"
@@ -11,6 +14,7 @@ def main():
 
     driver = webdriver.Remote("http://127.0.0.1:4723/wd/hub", caps)
 
+    #Mapeo de los números de la calculadora
     num0 = driver.find_element_by_id("com.google.android.calculator:id/digit_0")
     num1 = driver.find_element_by_id("com.google.android.calculator:id/digit_1")
     num2 = driver.find_element_by_id("com.google.android.calculator:id/digit_2")
@@ -22,6 +26,7 @@ def main():
     num8 = driver.find_element_by_id("com.google.android.calculator:id/digit_8")
     num9 = driver.find_element_by_id("com.google.android.calculator:id/digit_9")
     
+    #Mapeo de los operadores básicos de la calculadora
     suma = driver.find_element_by_id("com.google.android.calculator:id/op_add")
     resta = driver.find_element_by_id("com.google.android.calculator:id/op_sub")
     multiplica = driver.find_element_by_id("com.google.android.calculator:id/op_mul")
@@ -93,7 +98,7 @@ def main():
 
         print("Resultado de la calculadora esperado:", resultadoAppium) #Esperado porque es lo que se le está pidiendo por código que haga. Toca verificar el resultado como tal en la app
         print("Resultado de Python:", resultadoPython)
-        cosa = input("Presione ENTER para ingresar una nueva operacion")
+        cosa = input("Presione ENTER para ingresar una nueva operacion\n")
         #Borro la operación ya existente
         clear.click()
 
