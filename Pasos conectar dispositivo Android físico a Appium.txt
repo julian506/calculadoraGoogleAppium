@@ -1,0 +1,55 @@
+Pasos Appium:
+
+1. Instalar Appium
+	https://appium.io/
+
+2. Instalar Java Development Kit
+	https://www.oracle.com/co/java/technologies/javase/javase-jdk8-downloads.html
+
+3. Configurar JAVA_HOME
+	3.1. Crear la variable de usuario JAVA_HOME con ruta C:\Program Files\Java\jdk1.8.0_291
+	3.2. Editar la variable del sistema Path -> Dentro de la variable Path crear una nueva ruta C:\Program Files\Java\jdk1.8.0_291/bin
+	3.3. Vefificar que haya quedado bien ejecutando en cmd javac -version Debe salir la version de java
+	3.4. Verificar que haya quedado bien ejecutando en cmd echo %JAVA_HOME% Debe salir la ruta de jdk
+
+4. Descargar Android Studio Command Lines
+	https://developer.android.com/studio
+	4.1 Descomprimir el archivo .zip dentro de una carpeta llamada android-sdk (Recomiendo disco local D para no dañar la carpeta en un posible formateo o borrarla equivocadamente)
+	4.2 Quedará una carpeta llamada cmdline-tools
+	4.3 Dentro de esta carpeta creamos una llamada latest y metemos todos los demas archivos dentro de esta nueva carpeta
+	4.4 Nos ubicamos con el CMD dentro de la carpeta cmdline-tools\latest\bin
+	4.5 Ejecutamos el siguiente código cambiando los números finales del código por los números correspondientes al nivel de API de nuestro dispositivo Android
+		sdkmanager "platform-tools" "platforms;android-28"
+		Tabla con los valores para el código: https://es.wikipedia.org/wiki/Anexo:Historial_de_versiones_de_Android
+	4.6 Continuamos con ese código escribiendo "y" cuando se nos solicite
+
+5. Crear Android Home
+	5.1 Creamos la variable del sistema ANDROID_HOME con la ruta a la carpeta android-sdk creada en el paso anterior
+	5.2 Editar la variable del sistema Path -> Dentro de la variable Path crear la ruta de la carpeta android-sdk/platform-tools
+
+6. Permitir la conexión entre PC y Celular
+	6.1 Activar las opciones de desarrollador y la depuración USB en el celular.
+	6.2 Conectar el celular al PC
+	6.3 en el cmd, ejecutar el comando adb devices
+	6.4 Aparecerá la lista de dispositivos conectados al PC y al lado dirá "unauthorized". Desbloqueamos nuestro celular y veremos una ventana emergente que nos pide
+	dar permiso al PC. Se lo damos.
+
+7. Abrimos Appium e iniciamos el servidor.
+	7.1 Iniciamos el inspector
+	7.2 En desired Capabilities empezamos a llenar los siguientes datos:
+		7.2.1 name = platformName, text, Android
+		7.2.2 name = platformVersion, text, Versión de Android (solo el número entero)
+		7.2.3 name = deviceName, text, nombre del dispositivo (Se usa el cmd con el comando adb devices -l y el nombre es el que aparece después de "device:" y
+		antes del espacio)
+		7.2.4 name = automationName, text, UiAutomator1
+
+		//Acá usamos el siguiente comando en el CMD con el app a automatizar abierta para encontrar el appPackage y el appActivity
+		//adb shell "dumpsys window windows | grep -E 'mCurrentFocus'"
+		// Ó
+		//adb shell "dumpsys activity activities | grep mResumedActivity"
+
+		7.2.5 name = appPackage, text, nombre del paquete de la app que vamos a automatizar "com.google.android.calculator"
+		7.2.6 name = appActivity, text, nombre de la actividad (Resultado del comando de cmd después del /) "com.android.calculator2.Calculator"
+	7.3 Iniciar el servidor
+	7.4 Desde el celular permitirle a Appium instalar la aplicación
+	7.5 En Appium ahora se debe ver la pantalla del celular
